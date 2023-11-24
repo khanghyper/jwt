@@ -4,6 +4,7 @@ require('dotenv').config();
 const path = require('path');
 const { fileURLToPath } = require('url');
 const webRoutes = require('./src/routes/web.js');
+const apiRoutes = require('./src/routes/api.js');
 const  cors = require('cors');
 const bodyParser = require('body-parser');
 const connection = require('./src/config/connectDB.js');
@@ -24,6 +25,7 @@ connection();
 
 // khai báo route
 app.use('/', webRoutes);
+app.use('/api/v1', apiRoutes);
 
 
 app.listen(port, () => {

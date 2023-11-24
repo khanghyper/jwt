@@ -3,7 +3,19 @@ const hassPassword = require('../service/hashPassword');
 
 
 const getTestPage = (req, res) => {
-    return res.redirect('/user');
+    return res.status(200).json({
+        message: 'hello world',
+        data: [
+            {
+                id: 1,
+                name: 'khang',
+            },
+            {
+                id: 2,
+                name: 'tom',
+            }
+        ]
+    })
 }
 
 const getUsers = async (req, res) => {
@@ -30,16 +42,22 @@ const createUser = async (req, res) => {
     let userName = req.body.userName;
     let password = await hassPassword(req.body.password);
     let email = req.body.email;
-
+    let phone = req.body.phone;
+    console.log();
     try {
         await db.User.create({
             userName: userName,
             password: password,
             email: email,
+            phone: phone
         })
-        res.redirect('/user');
+        return res.status(200).json({
+            message: 'create user sussessfully !',
+        })
     } catch (err) {
-        console.log(err);
+        return res.staus(500).json({
+            message: 'error !', 
+        })
     }
 }
 
